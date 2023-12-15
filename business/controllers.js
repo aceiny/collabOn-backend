@@ -36,5 +36,50 @@ const UpdateBusiness = async (req,res) => {
         console.log(err)
     }
 }
-
-module.exports = {createBusiness , GetBusinessbyId , UpdateBusiness}
+const updateBusiness = async (req, res) => {
+    try {
+        const { id: businessId } = req.params;
+        console.log(businessId);
+      const { name, description, industry, CompanySize, location } = req.body;
+  
+      // Check if at least one field is provided for update
+      if (!name && !description && !industry && !CompanySize && !location) {
+        return res
+          .status(400)
+          .json({
+            message: 'Please provide at least one field to update',
+            data: null,
+            status: 400,
+          });
+      }
+  
+      const updatedBusiness = await Business.findByIdAndUpdate(
+        businessId,
+        {
+          ...(name && { name }),
+          ...(description && { description }),
+          ...(industry && { industry }),
+          ...(CompanySize && { CompanySize }),
+          ...(location && { location }),
+        },
+        { new: true } 
+      );
+  
+      if (!updatedBusiness) {
+        return res
+          .status(404)
+          .json({ message: 'Business not found', data: null, status: 404 });
+      }
+  
+      return res
+        .status(200)
+        .json({ message: 'Business updated', data: updatedBusiness, status: 200 });
+    } catch (err) {
+      console.error(err);
+      return res
+        .status(500)
+        .json({ message: 'Something went wrong', data: null, status: 500 });
+    }
+  };
+  
+module.exports = {createBusiness , GetBusinessbyId , updateBusiness}

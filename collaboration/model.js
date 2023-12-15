@@ -6,6 +6,10 @@ const collaborationSchema = new Schema({
   collaborator: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   status: { type: String, enum: ['pending', 'accepted', 'rejected'], default: 'pending' },
   message: { type: String },
+  duration : {type : String},
+  goals : {type :String},
+  outcomes:{type:String},
+  collabtype:{type:String},
 });
 
 const Collaboration = mongoose.model('Collaboration', collaborationSchema);
