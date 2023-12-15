@@ -13,14 +13,13 @@ const businessSchema = new Schema({
         type : Number,
         default : 1 ,
     },
-
     owner : {
         type : Schema.Types.ObjectId,
         ref : 'BusinessOwner'
     },
     workers : [{
         type : Schema.Types.ObjectId,
-        ref : 'Worker'
+        ref : 'User'
     }],
     projects : [{
             type : Schema.Types.ObjectId,
@@ -33,11 +32,11 @@ const businessSchema = new Schema({
    
     owner: {
         type: Schema.Types.ObjectId,
-        ref: 'Worker',
+        ref: 'User',
     },
     workers: [{
         type: Schema.Types.ObjectId,
-        ref: 'Worker',
+        ref: 'User',
     }],
     projects: [{
         type: Schema.Types.ObjectId,

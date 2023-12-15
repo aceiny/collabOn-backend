@@ -19,7 +19,10 @@ const UserSchema = new Schema({
     business : {
         type : Schema.Types.ObjectId ,
          ref : 'Business'
-        }
+        },
+    lastCommits : {
+        type : [String]
+    }
     })
 
 UserSchema.pre('save', async function(next){

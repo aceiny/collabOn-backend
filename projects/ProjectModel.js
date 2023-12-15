@@ -13,15 +13,11 @@ const projectSchema = new Schema({
     },
     projectLeader : {
         type : Schema.Types.ObjectId ,
-        ref : 'Worker'
+        ref : 'User'
     },
     workers : [{
         type : Schema.Types.ObjectId ,
-        ref : 'Worker'
-    }],
-    tasks : [{
-        type : Schema.Types.ObjectId ,
-        ref : 'Task'
+        ref : 'User'
     }],
     business : {
         type : Schema.Types.ObjectId ,
@@ -29,6 +25,10 @@ const projectSchema = new Schema({
     },
     budget: { type: Number , default : 0},
     tags: [{ type: String }],
+    Tasks : [{
+        type : Schema.Types.ObjectId ,
+        ref : 'Task'
+    }]
 
 })
 module.exports = model('Project', projectSchema);

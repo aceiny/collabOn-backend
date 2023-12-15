@@ -22,9 +22,6 @@ const Signup =  async(req,res) =>{
 
         })
         if(!user) return res.status(500).json({message:'something went wrong' , date : null , status : 500})
-        const businessT = await Business.findById(business)
-        businessT.owner = user.id
-        await businessT.save()
         res.cookie('token',generateToken(user.id),{httpOnly:true})
         return res.status(200).json({message:'user created' , data : user , status : 200})
         }

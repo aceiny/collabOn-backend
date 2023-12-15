@@ -20,7 +20,6 @@ const createProject = async (req, res) => {
         const info = {
             name,
             description,
-            business,
             projectLeader,
             tags,
             budget,

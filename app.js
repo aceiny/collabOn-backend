@@ -14,6 +14,7 @@ app.use(express.json())
 app.use('/auth', require('./auth/routes'))
 app.use('/business', require('./business/routes'))
 app.use('/projects', require('./projects/routes'))
+app.use('/tasks' , require('./task/routes'))
 //handelers
     app.use(NotFound) //handle wrong route pathes
     app.use(errhandler) //handle server errs
