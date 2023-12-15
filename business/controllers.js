@@ -99,5 +99,14 @@ const updateBusiness = async (req, res) => {
         .json({ message: 'Something went wrong', data: null, status: 500 });
     }
   };
-  
-module.exports = {createBusiness, GetBusiness , GetBusinessbyId , updateBusiness}
+const GetAllWorkers = async(req,res) => {
+    try{
+        const {id} = req.params
+        const workers = await User.find({business : id})
+        if(!workers) return res.status(500).json({message:'something went wrong' , date : null , status : 500})
+        return res.status(200).json({message:'workers fetched' , data : workers , status : 200})
+    }catch(err){
+
+    }
+}
+module.exports = {createBusiness, GetBusiness , GetBusinessbyId , GetAllWorkers , updateBusiness}

@@ -1,6 +1,7 @@
 //importin all requirements 
 const express = require('express')
 const app = express()
+const socket = require('socket.io')
 const connectdb = require('./db/connectdb') //db connection fonction 
 const NotFound = require('./extra/notfound') //not found handler
 const errhandler = require('./extra/errhandler') //err handlerc
@@ -17,11 +18,13 @@ app.use('/auth', require('./auth/routes'))
 app.use('/business', require('./business/routes'))
 app.use('/projects', require('./projects/routes'))
 app.use('/tasks' , require('./task/routes'))
+app.use('/messages' , require('./messages/routes'))
+app.use('/chat', require('./chat/routes'))
 //handelers
     app.use(NotFound) //handle wrong route pathes
     app.use(errhandler) //handle server errs
 //start the server 
-const port = process.env.PORT || 8080
+const port = process.env.PORT || 3031
 const start = async () => {
     try {
         await connectdb(process.env.MONGO) // connect to db
@@ -31,4 +34,21 @@ const start = async () => {
         console.log(err)
     }
 }
+const io = socket(3032 , {
+    cors : {
+        origin : '*'
+    }
+})
+io.on('connection' , (socket) => {
+    console.log('connected')
+    socket.on('join' , ({room}) => {
+        socket.join(room)
+    })
+    socket.on('message' , ({room , message}) => {
+        io.to(room).emit('message' , message)
+    })
+    socket.on('disconnect' , () => {
+        console.log('disconnected')
+    })
+})
 start()

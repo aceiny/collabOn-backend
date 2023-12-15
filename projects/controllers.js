@@ -2,7 +2,7 @@ const Project = require('./ProjectModel');
 const ProjectOverview = require('./ProjectOverviewModel');
 const Business = require('../business/BusinessModel');
 const User = require('../auth/UserModel');
-
+const { Types } = require('mongoose');
 const CanCreateProject = async (b) => {
     const business = await Business.findById(b);
     console.log(business.projects.length)
@@ -49,5 +49,14 @@ const GetProjectbyId = async (req, res) => {
     }
 }
 
-
-module.exports = { createProject, GetProjectbyId }
+const GetBusinessProjects = async(req,res) => {
+    try {
+        const {id} = req.params
+        const projects = await Project.find({business : id})
+        if(!projects) return res.status(500).json({message:'something went wrong' , date : null , status : 500})
+        return res.status(200).json({message:'projects fetched' , data : projects , status : 200})
+    }catch(err){
+        console.log(err)
+    }
+}
+module.exports = { createProject, GetProjectbyId , GetBusinessProjects }

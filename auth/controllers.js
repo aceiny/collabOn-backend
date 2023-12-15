@@ -10,7 +10,7 @@ const emailExists = async(email) => {
 }
 
 const Signup =  async(req,res) =>{
-    const {name , password , email , role , business } = req.body
+    const {name , password , email , role  } = req.body
     if(!name || !password || !email) return res.status(400).json({message:'please fill all the fields' , date : null , status : 400})
     if(await emailExists(email)) return res.status(400).json({message:'email already exists' , date : null , status : 400})
     const user = await User.create({
@@ -18,7 +18,6 @@ const Signup =  async(req,res) =>{
             password,
             email,
             role,
-            business
 
         })
         if(!user) return res.status(500).json({message:'something went wrong' , date : null , status : 500})
