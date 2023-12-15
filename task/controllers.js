@@ -5,11 +5,11 @@ const Business = require('../business/BusinessModel')
 
 const createTask = async (req, res) => {
     try {
-        console.log('pinged')
         const {TaskName , TaskDescription ,TaskProject , TaskWorker , TaskTags , TaskType , TaskBudget , TaskPriority , TaskDuration } = req.body
         if(!TaskName || !TaskDescription || !TaskProject || !TaskWorker || !TaskTags || !TaskType || !TaskBudget || !TaskPriority || !TaskDuration) return res.status(400).json({message:'please fill all the fields' , date : null , status : 400})
         const user = await User.findById(req.user.id)
         const project = await Project.findById(TaskProject)
+        console.log(user)
         if(project.projectLeader.toString() != user._id.toString()) return res.status(400).json({message:'you are not the project leader' , date : null , status : 400})
         const task = await Task.create({
             TaskName,

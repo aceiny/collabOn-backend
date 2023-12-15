@@ -6,7 +6,7 @@ const generateToken = (id) => {
 }
 const decodeToken = (req,res,next) => {
     try {
-        const {token} = req.cookies
+        const {token} = req.headers
         if(!token) return res.status(401).json({message:'please login first' , data : null , status : 401})
         const decoded = jwt.verify(token,process.env.JWT_SECRET)
         req.user = decoded

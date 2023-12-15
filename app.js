@@ -24,7 +24,7 @@ app.use('/chat', require('./chat/routes'))
     app.use(NotFound) //handle wrong route pathes
     app.use(errhandler) //handle server errs
 //start the server 
-const port = process.env.PORT || 3031
+const port = process.env.PORT || 3033
 const start = async () => {
     try {
         await connectdb(process.env.MONGO) // connect to db
