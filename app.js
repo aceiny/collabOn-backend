@@ -5,6 +5,8 @@ const connectdb = require('./db/connectdb') //db connection fonction
 const NotFound = require('./extra/notfound') //not found handler
 const errhandler = require('./extra/errhandler') //err handlerc
 const cookieParser = require('cookie-parser')
+const cors = require('cors')
+app.use(cors())
 require('dotenv').config()
 
 //middlewares
