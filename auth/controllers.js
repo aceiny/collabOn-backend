@@ -23,7 +23,7 @@ const Signup =  async(req,res) =>{
         if(!user) return res.status(500).json({message:'something went wrong' , date : null , status : 500})
         const token = generateToken(user._id)
         res.cookie('token',token,{httpOnly:false})
-        return res.status(200).json({message:'user created' , data : token , status : 200})
+        return res.status(200).json({message:'user created' , token,user, status : 200})
         }
 const Login = async(req,res) => {
     try{
@@ -35,7 +35,7 @@ const Login = async(req,res) => {
     if(!isMatch) return res.status(400).json({message:'email or password is wrong' , date : null , status : 400})
     const token = generateToken(user._id)
     res.cookie('token',token,{httpOnly:false})
-    return res.status(200).json({messsge:'logged in' , data : token, status : 200})
+    return res.status(200).json({messsge:'logged in' , token,user, status : 200})
     }catch(err){
         console.log(err)
     }  

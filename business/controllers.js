@@ -12,16 +12,15 @@ const createBusiness = async (req,res) => {
             industry,
             CompanySize,
             owner
-
         })
         if(!business) return res.status(500).json({message:'something went wrong' , date : null , status : 500})
         const user = await User.findById(owner)
-        console.log(user)
         user.business = business._id
         await user.save()
         return res.status(200).json({message:'business created' , data : business , status : 200})
     }catch(err){
         console.log(err)
+        return res.status(500).json({message:'something went wrong' , date : null , status : 500})
     }
 }
 const GetBusinessbyId = async (req,res) => {
@@ -99,6 +98,23 @@ const updateBusiness = async (req, res) => {
         .json({ message: 'Something went wrong', data: null, status: 500 });
     }
   };
+const CreateWorker = async(req,res) => {
+    try{
+        const {name , email , password} = req.body
+        if(!name || !email || !password || !role) return res.status(400).json({message:'please fill all the fields' , date : null , status : 400})
+        const worker = await User.create({
+            name,
+            email,
+            password,
+            role : worker,
+            business : req.user.id
+        })
+        if(!worker) return res.status(500).json({message:'something went wrong' , date : null , status : 500})
+        return res.status(200).json({message:'worker created' , data : worker , status : 200})
+    }catch(err){
+        console.log(err)
+    }
+}
 const GetAllWorkers = async(req,res) => {
     try{
         const {id} = req.params
@@ -109,4 +125,4 @@ const GetAllWorkers = async(req,res) => {
 
     }
 }
-module.exports = {createBusiness, GetBusiness , GetBusinessbyId , GetAllWorkers , updateBusiness}
+module.exports = {createBusiness, GetBusiness , GetBusinessbyId , GetAllWorkers , updateBusiness , UpdateBusiness , CreateWorker}

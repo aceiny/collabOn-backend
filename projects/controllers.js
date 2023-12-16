@@ -59,4 +59,15 @@ const GetBusinessProjects = async(req,res) => {
         console.log(err)
     }
 }
-module.exports = { createProject, GetProjectbyId , GetBusinessProjects }
+const MakeCollaborationReq = async (req, res) => {
+    const { id: projectId } = req.params;
+    const user = req.user.id;
+    const project = await Project.findById(projectId);
+    if (!project) return res.status(500).json({ message: 'project not found', date: null, status: 500 });
+    project.collaborationRequests.push({
+        requester: user,
+        project: projectId,
+    });
+    await project.save();
+}
+module.exports = {MakeCollaborationReq , createProject, GetProjectbyId , GetBusinessProjects }
