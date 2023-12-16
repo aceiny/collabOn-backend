@@ -100,14 +100,14 @@ const updateBusiness = async (req, res) => {
   };
 const CreateWorker = async(req,res) => {
     try{
-        const {name , email , password} = req.body
+        const {name , email , password,business} = req.body
         if(!name || !email || !password || !role) return res.status(400).json({message:'please fill all the fields' , date : null , status : 400})
         const worker = await User.create({
             name,
             email,
             password,
-            role : worker,
-            business : req.user.id
+            role : "worker",
+            business 
         })
         if(!worker) return res.status(500).json({message:'something went wrong' , date : null , status : 500})
         return res.status(200).json({message:'worker created' , data : worker , status : 200})
