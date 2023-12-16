@@ -101,7 +101,7 @@ const updateBusiness = async (req, res) => {
 const CreateWorker = async(req,res) => {
     try{
         const {name , email , password,business} = req.body
-        if(!name || !email || !password || !role) return res.status(400).json({message:'please fill all the fields' , date : null , status : 400})
+        if(!name || !email || !password || !business) return res.status(400).json({message:'please fill all the fields' , date : null , status : 400})
         const worker = await User.create({
             name,
             email,
